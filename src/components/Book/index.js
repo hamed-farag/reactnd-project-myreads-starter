@@ -1,6 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-export default function Book() {
+function Book(props) {
+  const { data } = props;
+  const { title, authors, imageLinks } = data;
+
+  const defaultBookImage = "/assets/images/default-book.jpg";
+
   return (
     <div className="book">
       <div className="book-top">
@@ -9,8 +15,11 @@ export default function Book() {
           style={{
             width: 128,
             height: 188,
-            backgroundImage:
-              'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
+            backgroundImage: `url(${
+              imageLinks && imageLinks.smallThumbnail
+                ? imageLinks.smallThumbnail
+                : defaultBookImage
+            })`,
           }}
         />
         <div className="book-shelf-changer">
@@ -25,8 +34,23 @@ export default function Book() {
           </select>
         </div>
       </div>
-      <div className="book-title">Ender's Game</div>
-      <div className="book-authors">Orson Scott Card</div>
+      <div className="book-title">{title}</div>
+      <div className="book-authors">
+        {authors && authors.map((author) => `${author},`)}
+      </div>
     </div>
   );
 }
+
+Book.propTypes = {
+  data: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    authors: PropTypes.array,
+    imageLinks: PropTypes.shape({
+      smallThumbnail: PropTypes.string,
+      thumbnail: PropTypes.string,
+    }),
+  }),
+};
+
+export default Book;
