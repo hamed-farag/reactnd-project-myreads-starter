@@ -1,30 +1,48 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { DebounceInput } from "react-debounce-input";
 
-export default function Search() {
-  return (
-    <div className="search-books">
-      <div className="search-books-bar">
-        <button
-          className="close-search"
-          onClick={() => this.setState({ showSearchPage: false })}
-        >
-          Close
-        </button>
-        <div className="search-books-input-wrapper">
-          {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+import { search as searchService } from "../../services/BooksAPI";
 
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-          <input type="text" placeholder="Search by title or author" />
+class Search extends React.Component {
+  state = { query: "" };
+
+  handleSearch = (query) => {
+    this.setState(
+      {
+        query: query.trim(),
+      },
+      () => {
+        searchService(query.trim()).then((response) => {
+          console.info(response);
+        });
+      }
+    );
+  };
+
+  render() {
+    const { history } = this.props;
+    return (
+      <div className="search-books">
+        <div className="search-books-bar">
+          <button className="close-search" onClick={() => history.push("/")}>
+            Close
+          </button>
+          <div className="search-books-input-wrapper">
+            <DebounceInput
+              minLength={3}
+              debounceTimeout={300}
+              placeholder="Search by title or author"
+              onChange={(e) => this.handleSearch(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="search-books-results">
+          <ol className="books-grid" />
         </div>
       </div>
-      <div className="search-books-results">
-        <ol className="books-grid" />
-      </div>
-    </div>
-  );
+    );
+  }
 }
+
+export default withRouter(Search);
