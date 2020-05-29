@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "immutability-helper": "^3.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-debounce-input": "^3.2.2",

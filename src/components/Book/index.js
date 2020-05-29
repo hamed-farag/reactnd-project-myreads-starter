@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Book(props) {
-  const { data } = props;
-  const { title, authors, imageLinks } = data;
+  const { data, actions } = props;
+  const { id, title, authors, imageLinks, shelf } = data;
 
   const defaultBookImage = "/assets/images/default-book.jpg";
 
@@ -23,7 +23,10 @@ function Book(props) {
           }}
         />
         <div className="book-shelf-changer">
-          <select>
+          <select
+            onChange={(e) => actions.onSelectShelf(data, e.target.value)}
+            value={shelf}
+          >
             <option value="move" disabled>
               Move to...
             </option>
@@ -44,6 +47,7 @@ function Book(props) {
 
 Book.propTypes = {
   data: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     authors: PropTypes.array,
     imageLinks: PropTypes.shape({
