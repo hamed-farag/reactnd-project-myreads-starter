@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function Book(props) {
   const { data, actions } = props;
-  const { id, title, authors, imageLinks, shelf } = data;
+  const { title, authors, imageLinks, shelf } = data;
 
   const defaultBookImage = "/assets/images/default-book.jpg";
 
@@ -23,6 +23,7 @@ function Book(props) {
           }}
         />
         <div className="book-shelf-changer">
+          {/* HERE WE WILL CALL API GETBOOKBYID TO GET ITS SHELF */}
           <select
             onChange={(e) => actions.onSelectShelf(data, e.target.value)}
             value={shelf}
