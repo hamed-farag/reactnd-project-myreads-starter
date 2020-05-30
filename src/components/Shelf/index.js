@@ -7,7 +7,9 @@ export default function Shelf(props) {
 
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">{metadata.shelfName}</h2>
+      {metadata && metadata.shelfName && (
+        <h2 className="bookshelf-title">{metadata.shelfName}</h2>
+      )}
       <div className="bookshelf-books">
         <ol className="books-grid">
           {data.map((book) => {
