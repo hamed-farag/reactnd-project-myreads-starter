@@ -105,7 +105,7 @@ class Search extends React.Component {
           ) : (
             <ShelvesList
               data={this.groupBooksIntoOneShelf()}
-              actions={{ onSelectShelf: this.handleSelectChange }}
+              actions={{ onChangeShelf: this.handleSelectChange }}
             />
           )}
           {error && !isLoading && (

@@ -63,7 +63,7 @@ class Home extends React.Component {
         <div className="list-books-content">
           <ShelvesList
             data={this.groupBooksByShelfName()}
-            actions={{ onSelectShelf: this.handleSelectChange }}
+            actions={{ onChangeShelf: this.handleSelectChange }}
           />
         </div>
         <div className="open-search">

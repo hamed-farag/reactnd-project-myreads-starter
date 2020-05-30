@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import BookShelfChanger from "../BookShelfChanger";
+
 function Book(props) {
   const { data, actions } = props;
-  const { title, authors, imageLinks, shelf } = data;
+  const { title, authors, imageLinks } = data;
 
   const defaultBookImage = "/assets/images/default-book.jpg";
 
@@ -22,21 +24,10 @@ function Book(props) {
             })`,
           }}
         />
-        <div className="book-shelf-changer">
-          {/* HERE WE WILL CALL API GETBOOKBYID TO GET ITS SHELF */}
-          <select
-            onChange={(e) => actions.onSelectShelf(data, e.target.value)}
-            value={shelf}
-          >
-            <option value="move" disabled>
-              Move to...
-            </option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
-          </select>
-        </div>
+        <BookShelfChanger
+          data={data}
+          actions={{ onChangeShelf: actions.onChangeShelf }}
+        />
       </div>
       <div className="book-title">{title}</div>
       <div className="book-authors">

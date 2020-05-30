@@ -17,7 +17,7 @@ export default function Shelf(props) {
               <li key={book.id}>
                 <Book
                   data={book}
-                  actions={{ onSelectShelf: actions.onSelectShelf }}
+                  actions={{ onChangeShelf: actions.onChangeShelf }}
                 />
               </li>
             );

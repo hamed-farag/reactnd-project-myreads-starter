@@ -2,7 +2,7 @@ import React from "react";
 
 import Shelf from "../Shelf";
 
-import shelvesName from "./enum";
+import shelvesEnum from "../../helpers/shelvesEnum";
 
 export default function ShelvesList(props) {
   const { data, actions } = props;
@@ -18,9 +18,9 @@ export default function ShelvesList(props) {
         shelfArr.push(
           <Shelf
             key={shelf}
-            metadata={{ shelfName: shelvesName[shelf] }}
+            metadata={{ shelfName: shelvesEnum[shelf] }}
             data={booksList}
-            actions={{ onSelectShelf: actions.onSelectShelf }}
+            actions={{ onChangeShelf: actions.onChangeShelf }}
           />
         );
       }
