@@ -101,7 +101,7 @@ class Search extends React.Component {
         </div>
         <div className="search-books-results">
           {isLoading ? (
-            <div className="system-message">Loading</div>
+            <div className="system-message">Loading...</div>
           ) : (
             <ShelvesList
               data={this.groupBooksIntoOneShelf()}
