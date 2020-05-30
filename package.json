@@ -6,6 +6,7 @@
     "immutability-helper": "^3.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
+    "react-click-outside": "^3.0.1",
     "react-debounce-input": "^3.2.2",
     "react-dom": "^16.6.3",
     "react-router-dom": "^5.2.0",
