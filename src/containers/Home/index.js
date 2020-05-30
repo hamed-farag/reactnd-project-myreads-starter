@@ -26,7 +26,7 @@ class Home extends React.Component {
 
   groupBooksByShelfName = () => {
     const { books } = this.state;
-    const groupedBooksByShelfName = groupBy(books, "shelf");
+    const groupedBooksByShelfName = groupBy(books, "shelf", "none");
     return groupedBooksByShelfName;
   };
 
