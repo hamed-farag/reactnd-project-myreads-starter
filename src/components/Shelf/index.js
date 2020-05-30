@@ -3,7 +3,7 @@ import React from "react";
 import Book from "../Book";
 
 export default function Shelf(props) {
-  const { metadata, data } = props;
+  const { metadata, data, actions } = props;
 
   return (
     <div className="bookshelf">
@@ -15,7 +15,10 @@ export default function Shelf(props) {
           {data.map((book) => {
             return (
               <li key={book.id}>
-                <Book data={book} />
+                <Book
+                  data={book}
+                  actions={{ onSelectShelf: actions.onSelectShelf }}
+                />
               </li>
             );
           })}

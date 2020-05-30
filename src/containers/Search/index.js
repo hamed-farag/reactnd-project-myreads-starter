@@ -1,12 +1,16 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { DebounceInput } from "react-debounce-input";
+import update from "immutability-helper";
 
 import groupBy from "../../helpers/groupBy";
 
 import ShelvesList from "../../components/ShelvesList";
 
-import { search as searchService } from "../../services/BooksAPI";
+import {
+  search as searchService,
+  update as updateBookService,
+} from "../../services/BooksAPI";
 
 class Search extends React.Component {
   state = { isLoading: false, query: "", books: [], error: null };
@@ -50,8 +54,30 @@ class Search extends React.Component {
 
   groupBooksIntoOneShelf = () => {
     const { books } = this.state;
-    const groupBooksIntoOneShelf = groupBy(books);
+    const groupBooksIntoOneShelf = groupBy(books, "dummy-property");
     return groupBooksIntoOneShelf;
+  };
+
+  handleSelectChange = (selectedBook, shelfName) => {
+    const { books } = this.state;
+    // update book in state
+
+    const selectedBookIndex = books.findIndex(
+      (book) => book.id === selectedBook.id
+    );
+
+    const updatedShelf = update(books[selectedBookIndex], {
+      shelf: { $set: shelfName },
+    });
+
+    const newBooks = update(books, {
+      $splice: [[selectedBookIndex, 1, updatedShelf]],
+    });
+
+    this.setState({ books: newBooks }, () => {
+      // update book in db
+      updateBookService(selectedBook, shelfName);
+    });
   };
 
   render() {
@@ -77,7 +103,10 @@ class Search extends React.Component {
           {isLoading ? (
             <div className="system-message">Loading</div>
           ) : (
-            <ShelvesList data={this.groupBooksIntoOneShelf()} />
+            <ShelvesList
+              data={this.groupBooksIntoOneShelf()}
+              actions={{ onSelectShelf: this.handleSelectChange }}
+            />
           )}
           {error && !isLoading && (
             <div className="system-message">
@@ -91,31 +120,3 @@ class Search extends React.Component {
 }
 
 export default withRouter(Search);
-
-//import update from "immutability-helper";
-
-/*
- handleSelectChange = (selectedBook, shelfName) => {
-    const { books } = this.state;
-    // update book in state
-
-    const selectedBookIndex = books.findIndex(
-      (book) => book.id === selectedBook.id
-    );
-
-    const updatedShelf = update(books[selectedBookIndex], {
-      shelf: { $set: shelfName },
-    });
-
-    const newBooks = update(books, {
-      $splice: [[selectedBookIndex, 1, updatedShelf]],
-    });
-
-    this.setState({ books: newBooks }, () => {
-      // update book in db
-      updateBookService(selectedBook, shelfName);
-    });
-  };
-*/
-
-//actions={{ onSelectShelf: this.handleSelectChange }}

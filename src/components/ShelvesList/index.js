@@ -5,7 +5,7 @@ import Shelf from "../Shelf";
 import shelvesName from "./enum";
 
 export default function ShelvesList(props) {
-  const { data } = props;
+  const { data, actions } = props;
 
   const renderShelves = () => {
     const shelfArr = [];
@@ -20,6 +20,7 @@ export default function ShelvesList(props) {
             key={shelf}
             metadata={{ shelfName: shelvesName[shelf] }}
             data={booksList}
+            actions={{ onSelectShelf: actions.onSelectShelf }}
           />
         );
       }
