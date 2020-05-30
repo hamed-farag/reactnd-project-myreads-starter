@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import enhanceWithClickOutside from "react-click-outside";
 
 import "./styles.css";
@@ -59,17 +60,18 @@ class Dropdown extends React.Component {
     const { items } = this.props;
     const itemsArr = [];
 
-    items.map((item) => {
+    items.map((item) =>
       itemsArr.push(
         <span
+          key={`${item.value}-${item.label}`}
           onClick={() => this.handleItemClick(item.value)}
           className={`${selectedValue === item.value &&
             "active"} ${item.disabled && "disabled"}`}
         >
           {item.label}
         </span>
-      );
-    });
+      )
+    );
 
     return itemsArr;
   };
@@ -83,7 +85,7 @@ class Dropdown extends React.Component {
         <div onClick={this.handleClick} className="book-shelf-changer" />
         {loading && (
           <div className="dropdown-loading">
-            <div class="loading-dual-ring" />
+            <div className="loading-dual-ring" />
           </div>
         )}
         {isShow && (
@@ -93,5 +95,13 @@ class Dropdown extends React.Component {
     );
   }
 }
+
+Dropdown.propTypes = {
+  selectedValue: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
+};
 
 export default enhanceWithClickOutside(Dropdown);

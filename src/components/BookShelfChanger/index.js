@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import DropDown from "../Dropdown";
 
@@ -65,5 +66,20 @@ class BookShelfChanger extends React.Component {
     );
   }
 }
+
+BookShelfChanger.propTypes = {
+  actions: PropTypes.shape({
+    onChangeShelf: PropTypes.func.isRequired,
+  }).isRequired,
+  data: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    authors: PropTypes.array,
+    imageLinks: PropTypes.shape({
+      smallThumbnail: PropTypes.string,
+      thumbnail: PropTypes.string,
+    }),
+  }),
+};
 
 export default BookShelfChanger;
